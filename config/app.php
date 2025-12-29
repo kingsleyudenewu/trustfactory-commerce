@@ -17,6 +17,30 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Admin Email
+    |--------------------------------------------------------------------------
+    |
+    | The email address of the admin user who will receive notifications
+    | such as low stock alerts and daily sales reports.
+    |
+    */
+
+    'admin_email' => env('ADMIN_EMAIL', 'admin@example.com'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Low Stock Threshold
+    |--------------------------------------------------------------------------
+    |
+    | When a product's stock falls below this threshold, a notification
+    | will be sent to the admin user.
+    |
+    */
+
+    'low_stock_threshold' => env('LOW_STOCK_THRESHOLD', 5),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Environment
     |--------------------------------------------------------------------------
     |
