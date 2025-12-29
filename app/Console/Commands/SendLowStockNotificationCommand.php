@@ -39,27 +39,28 @@ class SendLowStockNotificationCommand extends Command
 
         // Check all products
         $this->info("Checking all products for low stock (threshold: {$threshold} units)...\n");
-        
-        $lowStockProducts = Product::where('stock_quantity', '<=', $threshold)->get();
 
-        if ($lowStockProducts->isEmpty()) {
+        $query = Product::where('stock_quantity', '<=', $threshold);
+        $count = $query->count();
+
+        if ($count === 0) {
             $this->info("✓ All products have sufficient stock");
             return self::SUCCESS;
         }
 
-        $this->warn("Found {$lowStockProducts->count()} products with low stock:\n");
-        
-        $bar = $this->output->createProgressBar($lowStockProducts->count());
+        $this->warn("Found {$count} products with low stock:\n");
+
+        $bar = $this->output->createProgressBar($count);
         $bar->start();
 
-        foreach ($lowStockProducts as $product) {
+        foreach ($query->cursor() as $product) {
             SendLowStockNotificationJob::dispatch($product, $product->stock_quantity, $threshold);
             $bar->advance();
         }
 
         $bar->finish();
         $this->newLine(2);
-        $this->info("✓ Dispatched {$lowStockProducts->count()} notification jobs");
+        $this->info("✓ Dispatched {$count} notification jobs");
 
         return self::SUCCESS;
     }

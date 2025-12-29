@@ -35,3 +35,14 @@ Schedule::command('notification:cleanup')
     ->onFailure(function () {
         \Illuminate\Support\Facades\Log::error('Notification cleanup job failed');
     });
+
+
+// notification:low-stock command is defined in SendLowStockNotificationCommand.php
+Schedule::command('notification:low-stock')
+    ->weekly()
+    ->fridays()
+    ->at('10:00')
+    ->name('send-low-stock-notifications')
+    ->onFailure(function () {
+        \Illuminate\Support\Facades\Log::error('Low stock notification job failed');
+    });
