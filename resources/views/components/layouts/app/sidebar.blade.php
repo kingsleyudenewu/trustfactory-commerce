@@ -15,9 +15,19 @@
                 <flux:navlist.group :heading="__('Platform')" class="grid">
                     <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
                 </flux:navlist.group>
+
+                <flux:navlist.group :heading="__('Shopping')" class="grid">
+                    <flux:navlist.item icon="shopping-bag" :href="route('products')" :current="request()->routeIs('products')" wire:navigate>{{ __('Browse Products') }}</flux:navlist.item>
+                    <flux:navlist.item icon="shopping-cart" :href="route('cart')" :current="request()->routeIs('cart')" wire:navigate>{{ __('Shopping Cart') }}</flux:navlist.item>
+                </flux:navlist.group>
             </flux:navlist>
 
             <flux:spacer />
+
+            <!-- Cart Badge -->
+            <div class="mb-4 text-zinc-600 dark:text-zinc-400">
+                <livewire:cart-badge />
+            </div>
 
             <flux:navlist variant="outline">
                 <flux:navlist.item icon="folder-git-2" href="https://github.com/laravel/livewire-starter-kit" target="_blank">
@@ -80,6 +90,10 @@
             <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left" />
 
             <flux:spacer />
+
+            <div class="text-zinc-600 dark:text-zinc-400">
+                <livewire:cart-badge />
+            </div>
 
             <flux:dropdown position="top" align="end">
                 <flux:profile
